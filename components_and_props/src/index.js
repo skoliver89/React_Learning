@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // The simplest component - In a JS function (Function Component)
+// Always start component names with a capital letter.
 function Welcome(props) {
     return <h1>Hello, {props.name}</h1>;
 }
@@ -14,12 +15,28 @@ function Welcome(props) {
 //   }
 
 // Rendering a Component
-const element = <Welcome name="Stephen" />;
+// const element = <Welcome name="Stephen" />;
+
+// ReactDOM.render(
+//     element,
+//     document.getElementById('root')
+// );
+
+// Composing Components
+// Can refer to other comp. in their output
+function App() {
+    return (
+        <div>
+            <Welcome name="Stephen" />
+            <Welcome name="Sal" />
+            <Welcome name="Ed" />
+        </div>
+    );
+}
 
 ReactDOM.render(
-    element,
+    <App />,
     document.getElementById('root')
 );
-
 
 //Tutorial Link: https://reactjs.org/docs/components-and-props.html
