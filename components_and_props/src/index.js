@@ -39,4 +39,6 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+// All React Components must act like pure functions with respect to props!
+
 //Tutorial Link: https://reactjs.org/docs/components-and-props.html
