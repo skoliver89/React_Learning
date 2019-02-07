@@ -18,6 +18,22 @@ function Greeting(props) {
     return <GuestGreeting />;
 }
 
+function LoginButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Login
+        </button>
+    );
+}
+
+function LogoutButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Logout
+        </button>
+    );
+}
+
 ReactDOM.render(
     // Changing isLoggedIn's value will change the greeting displayed.
     <Greeting isLoggedIn={false} />,
