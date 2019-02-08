@@ -27,7 +27,7 @@
 			iii. Either the common or another component higher up in the hierarchy should own the state
 			iv. If you can't find a component where it makes sense to own the state, create a new component simply for holding the state and add it somewhere in the hierarchy about the common owner component. 
 	5. Add inverse data flow
-		a. Pen Link: [PEN](https://codepen.io/gaearon/pen/LzWZvb)
+		a. Pen Link: https://codepen.io/gaearon/pen/LzWZvb
 		
 	6. ???
 	7. Profit!
