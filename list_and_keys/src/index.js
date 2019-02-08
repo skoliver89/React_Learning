@@ -22,4 +22,3 @@ ReactDOM.render(
 );
 
 //Tutorial Link: https://reactjs.org/docs/lists-and-keys.html
-// Left off at: `Extracting Components with Keys`
