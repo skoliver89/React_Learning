@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 
 function NumberList(props) {
     const numbers = props.numbers;
-    const listItems = numbers.map((number) =>
-        <li>{number}</li>
+    const listItems = numbers.map((number, index) =>
+    // Normally would use keys from the data (e.g. from a DB)
+    // Only use index if no other option is available (last resort)
+        <li key={index}>
+            {number}
+        </li>
     );
     return (
         <ul>{listItems}</ul>
@@ -16,3 +20,6 @@ ReactDOM.render(
     <NumberList numbers={numbers} />,
     document.getElementById('root')
 );
+
+//Tutorial Link: https://reactjs.org/docs/lists-and-keys.html
+// Left off at: `Extracting Components with Keys`
