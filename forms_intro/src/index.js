@@ -190,3 +190,5 @@ ReactDOM.render(
 );
 
 // Tutorial Link: https://reactjs.org/docs/forms.html
+// Setting an input value to anything but null or undefined will lock the input
+// Link to the alternative [uncontrolled inputs]: https://reactjs.org/docs/uncontrolled-components.html
