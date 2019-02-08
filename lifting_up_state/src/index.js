@@ -13,6 +13,9 @@ function BoilingVerdict(props) {
         }
         return <p>The water would not boil.</p>;
     }
+    if (props.celsius === 0) {
+        return <p>Brrr... It is freezing!</p>
+    }
     return null;
 }
 
