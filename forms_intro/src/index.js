@@ -122,3 +122,4 @@ ReactDOM.render(
 );
 
 // Tutorial Link: https://reactjs.org/docs/forms.html
+// Stopped at: Handling Multiple Inputs
