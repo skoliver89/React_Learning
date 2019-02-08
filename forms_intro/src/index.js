@@ -4,15 +4,23 @@ import ReactDOM from 'react-dom';
 function App() {
     return (
         <div>
+            <h2>Single Text Input Example:</h2>
             <NameForm />
-            <br />
+            <hr />
+            <h2>Single Text-area Input Example:</h2>
             <EssayForm />
-            <br />
+            <hr />
+            <h2>Single Selector Input Example:</h2>
             <FlavorForm />
+            <hr />
+            <h2>Multiple Controlled Input Example:</h2>
+            <Reservation />
+            <hr />
         </div>
     );
 }
 
+// Text input field
 class NameForm extends React.Component {
     constructor(props) {
         super(props);
@@ -45,6 +53,7 @@ class NameForm extends React.Component {
     }
 }
 
+// Text-area input field
 class EssayForm extends React.Component {
     constructor(props) {
         super(props);
@@ -79,6 +88,7 @@ class EssayForm extends React.Component {
     }
 }
 
+// Selector field
 class FlavorForm extends React.Component {
     constructor(props) {
         super(props);
@@ -116,10 +126,67 @@ class FlavorForm extends React.Component {
     }
 }
 
+// Multiple controlled inputs - add a name attr to each ele to distinguish
+class Reservation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isGoing: true,
+            numberOfGuests: 2
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    handleSubmit(event) {
+        alert('There are ' + this.state.numberOfGuests + ' guests ' +
+        (this.state.isGoing ? '' : 'not ') + 'showing up for the reservation.');
+        event.preventDefault();
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Is going:
+                    <input
+                        name="isGoing"
+                        type="checkbox"
+                        checked={this.state.isGoing}
+                        onChange={this.handleInputChange} />
+                </label>
+                <br />
+                <label>
+                    Number of guests:
+                    <input
+                        name="numberOfGuests"
+                        type="number"
+                        value={this.state.numberOfGuests}
+                        onChange={this.handleInputChange} />
+                </label>
+                <br />
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
+// =====================================================================================
+
 ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
 
 // Tutorial Link: https://reactjs.org/docs/forms.html
-// Stopped at: Handling Multiple Inputs
