@@ -1,5 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css'
+
+class LoginControl extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = {isLoggedIn: false};
+    }
+
+    handleLoginClick() {
+        this.setState({isLoggedIn: true});
+    }
+
+    handleLogoutClick() {
+        this.setState({isLoggedIn: false});
+    }
+
+    render() {
+        const isLoggedIn = this.state.isLoggedIn;
+        let button;
+
+        if (isLoggedIn) {
+            button = <LogoutButton onClick={this.handleLogoutClick} />
+        } else {
+            button = <LoginButton onClick={this.handleLoginClick} />
+        }
+
+        return (
+            <div>
+                <WarningBanner warn={!isLoggedIn} />
+                <Greeting isLoggedIn={isLoggedIn} />
+                {button}
+            </div>
+        );
+    }
+}
 
 function UserGreeting(props) {
     return <h1>Welcome Back!</h1>;
@@ -34,42 +71,23 @@ function LogoutButton(props) {
     );
 }
 
-class LoginControl extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
-        this.state = {isLoggedIn: false};
+function WarningBanner(props) {
+    if(!props.warn) {
+        // Hide the component
+        // Does not affect the firing of the component's life-cycle methods
+        return null;
     }
 
-    handleLoginClick() {
-        this.setState({isLoggedIn: true});
-    }
-
-    handleLogoutClick() {
-        this.setState({isLoggedIn: false});
-    }
-
-    render() {
-        const isLoggedIn = this.state.isLoggedIn;
-        let button;
-
-        if (isLoggedIn) {
-            button = <LogoutButton onClick={this.handleLogoutClick} />
-        } else {
-            button = <LoginButton onClick={this.handleLoginClick} />
-        }
-
-        return (
-            <div>
-                <Greeting isLoggedIn={isLoggedIn} />
-                {button}
-            </div>
-        );
-    }
+    return (
+        <div className="warning">
+            <h3>Warning: You are not logged in...</h3>
+        </div>
+    );
 }
 
 ReactDOM.render(
     <LoginControl />,
     document.getElementById('root')
 );
+
+//Tutorial Link: https://reactjs.org/docs/conditional-rendering.html
