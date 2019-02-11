@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // FontAwesome for React: https://github.com/FortAwesome/react-fontawesome#usage
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faCheck, faEquals, faXRay, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCheck, faEquals, faTimes } from '@fortawesome/free-solid-svg-icons';
 // Bootstrap for React: https://facebook.github.io/create-react-app/docs/adding-bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -25,19 +25,25 @@ class App extends React.Component {
 class Game extends React.Component {
     state = {
         selectedNumbers: [],
+        usedNumbers: [],
         numberOfStars:  Math.floor(Math.random()*9) + 1,
         answerIsCorrect: null
     };
 
     selectNumber = (clickedNumber) => {
-        if (this.state.selectedNumbers.indexOf(clickedNumber) >= 0) { return; }
+        if (this.state.selectedNumbers.indexOf(clickedNumber) >= 0 || 
+            this.state.usedNumbers.indexOf(clickedNumber) >= 0) {
+                return; 
+        }
         this.setState(prevState => ({
+            answerIsCorrect: null,
             selectedNumbers: prevState.selectedNumbers.concat(clickedNumber)
         }));
     };
 
     unselectedNumber = (clickedNumber) => {
         this.setState(prevState => ({
+            answerIsCorrect: null,
             selectedNumbers: prevState.selectedNumbers
                                       .filter(number => number !== clickedNumber)
         }));
@@ -51,8 +57,17 @@ class Game extends React.Component {
         }));
     };
 
+    acceptAnswer = () => {
+        this.setState(prevState => ({
+            usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
+            selectedNumbers: [],
+            answerIsCorrect: null,
+            numberOfStars: Math.floor(Math.random()*9) + 1
+        }));
+    };
+
     render() {
-        const { selectedNumbers, numberOfStars, answerIsCorrect} = this.state;
+        const { selectedNumbers, numberOfStars, answerIsCorrect, usedNumbers} = this.state;
         return(
             <div className="container">
                 <h3>Play Nine</h3>
@@ -60,14 +75,16 @@ class Game extends React.Component {
                 <div className="row">
                     <Stars numberOfStars={numberOfStars} />
                     <Button selectedNumbers={selectedNumbers}
-                            answerIsCorrect={answerIsCorrect}
-                            checkAnswer={this.checkAnswer} />
+                    answerIsCorrect={answerIsCorrect}
+                    checkAnswer={this.checkAnswer} 
+                    acceptAnswer={this.acceptAnswer} />
                     <Answer selectedNumbers={selectedNumbers} 
-                        unselectNumber={this.unselectedNumber} />
+                    unselectNumber={this.unselectedNumber} />
                 </div>
                 <br />        
-                <Numbers selectedNumbers={selectedNumbers} 
-                    selectNumber={this.selectNumber} />       
+                <Numbers selectedNumbers={selectedNumbers}
+                usedNumbers={usedNumbers}
+                selectNumber={this.selectNumber} />       
             </div>
         );
     }
@@ -87,21 +104,22 @@ const Button = (props) => {
     switch(props.answerIsCorrect){
         case true:
             button = 
-                <button className="btn btn-success" disabled={props.selectedNumbers.length === 0}>
+                <button className="btn btn-success" 
+                onClick={props.acceptAnswer}>
                     <FontAwesomeIcon icon={faCheck} />
                 </button>;
             break;
         case false:
         button = 
-            <button className="btn btn-danger" disabled={props.selectedNumbers.length === 0}>
+            <button className="btn btn-danger">
                 <FontAwesomeIcon icon={faTimes} />
             </button>;
         break;
         default:
             button = 
                 <button className="btn btn-primary" 
-                    onClick={props.checkAnswer}
-                    disabled={props.selectedNumbers.length === 0}>
+                onClick={props.checkAnswer}
+                disabled={props.selectedNumbers.length === 0}>
                     <FontAwesomeIcon icon={faEquals} />
                 </button>;
     }
@@ -130,6 +148,9 @@ const Numbers = (props) => {
         if(props.selectedNumbers.indexOf(number) >=0) {
             return 'selected';
         }
+        if(props.usedNumbers.indexOf(number) >= 0) {
+            return 'used';
+        }
     } 
 
     return (
@@ -137,7 +158,7 @@ const Numbers = (props) => {
             <div>
                 {Numbers.list.map((number, i) =>
                     <span key={i} className={numberClassName(number)}
-                        onClick={() => props.selectNumber(number)}>
+                    onClick={() => props.selectNumber(number)}>
                         {number}
                     </span>
                 )}
