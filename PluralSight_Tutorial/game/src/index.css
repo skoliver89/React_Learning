@@ -8,11 +8,6 @@ body {
                                   supported by Chrome and Opera */
 }
 
-.fa-star {
-    margin: 0.5em;
-    font-size: 24px;
-}
-
 span {
     display: inline-block;
     margin: 0.5em;
@@ -21,6 +16,11 @@ span {
     width: 24px;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.fa-star {
+    margin: 0.5em;
+    font-size: 24px;
 }
 
 .selected {

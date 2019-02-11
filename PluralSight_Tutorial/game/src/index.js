@@ -37,8 +37,20 @@ class Game extends React.Component {
         numberOfStars: Game.randomNumber(),
         answerIsCorrect: null,
         redraws: 5,
-        doneStatus: null
+        doneStatus: null,
+        timeRemaining: 60
     });
+
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
 
     state = Game.initialState();
 
@@ -101,6 +113,9 @@ class Game extends React.Component {
             if (prevState.usedNumbers.length === 9) {
                 return {doneStatus: 'You Win: Congratulations!'};
             }
+            if (prevState.timeRemaining === 0){
+                return {doneStatus: `Time's Up: Game Over!`};
+            }
             if (prevState.redraws === 0 && !this.possibleSolutions(
                                                     prevState.numberOfStars, 
                                                     prevState.usedNumbers)) {
@@ -110,6 +125,15 @@ class Game extends React.Component {
     };
 
     resetGame = () => this.setState(Game.initialState());
+
+    // tick down the game timer
+    tick() {
+        this.setState(prevState => {
+            if (prevState.timeRemaining !== 0 && prevState.doneStatus === null) {
+                return {timeRemaining: prevState.timeRemaining - 1};
+            }
+        }, this.updateDoneStatus);
+    }
 
     render() {
         const { 
@@ -122,7 +146,11 @@ class Game extends React.Component {
         } = this.state;
         return(
             <div className="container">
-                <h3>Play Nine</h3>
+            <br />
+                <div className="row">
+                    <h3 className="col-7">Play Nine</h3>
+                    <h5 className="col-5">Time Remaining: {this.state.timeRemaining}</h5>
+                </div>
                 <hr />
                 <div className="row">
                     <Stars numberOfStars={numberOfStars} />
@@ -250,7 +278,7 @@ const Numbers = (props) => {
 }
 
 const DoneFrame = (props) => {
-        return(
+    return(
         <div className="text-center">
             <h2>{props.doneStatus}</h2>
             <br />
