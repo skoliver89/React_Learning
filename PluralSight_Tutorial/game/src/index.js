@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // FontAwesome for React: https://github.com/FortAwesome/react-fontawesome#usage
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCheck, faEquals, faXRay, faTimes } from '@fortawesome/free-solid-svg-icons';
 // Bootstrap for React: https://facebook.github.io/create-react-app/docs/adding-bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -25,7 +25,8 @@ class App extends React.Component {
 class Game extends React.Component {
     state = {
         selectedNumbers: [],
-        numberOfStars:  Math.floor(Math.random()*9) + 1
+        numberOfStars:  Math.floor(Math.random()*9) + 1,
+        answerIsCorrect: null
     };
 
     selectNumber = (clickedNumber) => {
@@ -42,15 +43,25 @@ class Game extends React.Component {
         }));
     };
 
+    // Normally don't store values that can be calculated in state
+    // but we need it for a UI repaint, consider refactor later.
+    checkAnswer = () => {
+        this.setState(prevState => ({
+            answerIsCorrect: prevState.numberOfStars === prevState.selectedNumbers.reduce((acc, n) => acc + n, 0)
+        }));
+    };
+
     render() {
-        const { selectedNumbers, numberOfStars} = this.state;
+        const { selectedNumbers, numberOfStars, answerIsCorrect} = this.state;
         return(
             <div className="container">
                 <h3>Play Nine</h3>
                 <hr />
                 <div className="row">
                     <Stars numberOfStars={numberOfStars} />
-                    <Button selectedNumbers={selectedNumbers}/>
+                    <Button selectedNumbers={selectedNumbers}
+                            answerIsCorrect={answerIsCorrect}
+                            checkAnswer={this.checkAnswer} />
                     <Answer selectedNumbers={selectedNumbers} 
                         unselectNumber={this.unselectedNumber} />
                 </div>
@@ -72,11 +83,31 @@ const Stars = (props) => {
 };
 
 const Button = (props) => {
+    let button;
+    switch(props.answerIsCorrect){
+        case true:
+            button = 
+                <button className="btn btn-success" disabled={props.selectedNumbers.length === 0}>
+                    <FontAwesomeIcon icon={faCheck} />
+                </button>;
+            break;
+        case false:
+        button = 
+            <button className="btn btn-danger" disabled={props.selectedNumbers.length === 0}>
+                <FontAwesomeIcon icon={faTimes} />
+            </button>;
+        break;
+        default:
+            button = 
+                <button className="btn btn-primary" 
+                    onClick={props.checkAnswer}
+                    disabled={props.selectedNumbers.length === 0}>
+                    <FontAwesomeIcon icon={faEquals} />
+                </button>;
+    }
     return (
         <div className="col-2">
-            <button className="btn btn-primary" disabled={props.selectedNumbers.length === 0}>
-                =
-            </button>
+            {button}
         </div>
     );
 };
