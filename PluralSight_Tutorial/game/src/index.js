@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 // FontAwesome for React: https://github.com/FortAwesome/react-fontawesome#usage
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faCheck, faEquals, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCheck, faEquals, faTimes, faRecycle } from '@fortawesome/free-solid-svg-icons';
 // Bootstrap for React: https://facebook.github.io/create-react-app/docs/adding-bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
@@ -23,11 +23,21 @@ class App extends React.Component {
 }
 
 class Game extends React.Component {
+    static randomNumber = (currNum) => { 
+        let randNum = Math.floor(Math.random()*9) + 1;
+        if (randNum === currNum) {
+            randNum = Math.floor(Math.random()*9) + 1;
+        }
+        return randNum;
+    };
+
     state = {
         selectedNumbers: [],
         usedNumbers: [],
-        numberOfStars:  Math.floor(Math.random()*9) + 1,
-        answerIsCorrect: null
+        numberOfStars: Game.randomNumber(),
+        answerIsCorrect: null,
+        redraws: 5,
+        doneStatus: null
     };
 
     selectNumber = (clickedNumber) => {
@@ -62,12 +72,29 @@ class Game extends React.Component {
             usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
             selectedNumbers: [],
             answerIsCorrect: null,
-            numberOfStars: Math.floor(Math.random()*9) + 1
+            numberOfStars: Game.randomNumber(prevState.numberOfStars)
+        }));
+    };
+
+    redraw = () => {
+        if (this.state.redraws === 0) { return };
+        this.setState(prevState => ({
+            numberOfStars: Game.randomNumber(prevState.numberOfStars),
+            answerIsCorrect: null,
+            selectedNumbers: [],
+            redraws: prevState.redraws - 1
         }));
     };
 
     render() {
-        const { selectedNumbers, numberOfStars, answerIsCorrect, usedNumbers} = this.state;
+        const { 
+            selectedNumbers, 
+            numberOfStars, 
+            answerIsCorrect, 
+            usedNumbers, 
+            redraws,
+            doneStatus
+        } = this.state;
         return(
             <div className="container">
                 <h3>Play Nine</h3>
@@ -75,16 +102,21 @@ class Game extends React.Component {
                 <div className="row">
                     <Stars numberOfStars={numberOfStars} />
                     <Button selectedNumbers={selectedNumbers}
-                    answerIsCorrect={answerIsCorrect}
-                    checkAnswer={this.checkAnswer} 
-                    acceptAnswer={this.acceptAnswer} />
+                        answerIsCorrect={answerIsCorrect}
+                        redraws={redraws}
+                        checkAnswer={this.checkAnswer} 
+                        acceptAnswer={this.acceptAnswer} 
+                        redraw={this.redraw} />
                     <Answer selectedNumbers={selectedNumbers} 
-                    unselectNumber={this.unselectedNumber} />
+                        unselectNumber={this.unselectedNumber} />
                 </div>
-                <br />        
-                <Numbers selectedNumbers={selectedNumbers}
-                usedNumbers={usedNumbers}
-                selectNumber={this.selectNumber} />       
+                <br />
+                {doneStatus ? 
+                    <DoneFrame doneStatus={doneStatus} /> :
+                    <Numbers selectedNumbers={selectedNumbers}
+                        usedNumbers={usedNumbers}
+                        selectNumber={this.selectNumber} />
+                }       
             </div>
         );
     }
@@ -124,8 +156,13 @@ const Button = (props) => {
                 </button>;
     }
     return (
-        <div className="col-2">
+        <div className="col-2 text-center">
             {button}
+            <br />
+            <br />
+            <button className="btn btn-warning btn-sm" onClick={props.redraw}>
+                <FontAwesomeIcon icon={faRecycle} /> {props.redraws}
+            </button>
         </div>
     );
 };
@@ -166,6 +203,14 @@ const Numbers = (props) => {
         </div>
     );
 }
+
+const DoneFrame = (props) => {
+        return(
+        <div className="text-center">
+            <h2>{props.doneStatus}</h2>
+        </div>
+    );
+};
 
 Numbers.list = _.range(1, 10);
 
