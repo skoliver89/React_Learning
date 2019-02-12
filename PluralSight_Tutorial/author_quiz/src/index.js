@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import './index.css';
 import AuthorQuiz from './authorQuiz.js';
+import AddAuthorForm from './addAuthorForm.js'
 import * as serviceWorker from './serviceWorker';
 import { shuffle, sample } from 'underscore';
 
@@ -47,27 +48,27 @@ const authors = [
     }
 ];
 
-const state = {
-    turnData: getTurnData(authors),
-    highlight: 'none'
-};
+let state = resetState();
 
 // Top level Component for the game; Route ="/"
 function App() {
     return (
-        <AuthorQuiz {...state} onAnswerSelected={onAnswerSelected} />
+        <AuthorQuiz {...state} 
+            onAnswerSelected={onAnswerSelected} 
+            onContinue={() => {
+                state = resetState(); 
+                render();
+            }} />
     );
 }
 
 // Top Level Component for the form to add new authors; Route = "/add"
-function AddAuthorForm({match}) {
-    return(
-        <div>
-            <h1>Add Author</h1>
-            <p>{JSON.stringify(match)}</p>
-        </div>
-    );
-}
+const AuthorWrapper = withRouter(({ history }) =>
+    <AddAuthorForm onAddAuthor={(author) => {
+        authors.push(author);
+        history.push('/');
+    }} />
+);
 
 function getTurnData(authors) {
     const allBooks = authors.reduce(function (p, c, i) {
@@ -90,13 +91,20 @@ function onAnswerSelected(answer) {
     render();
 }
 
+function resetState() {
+    return {
+        turnData: getTurnData(authors),
+        highlight: 'none'
+    };
+}
+
 // Render function, weird way of doing it but, this is how the tutorial/lesson did it.
 function render() {
     ReactDOM.render(
         <BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={App} />
-                <Route path="/add" component={AddAuthorForm} />
+                <Route path="/add" component={AuthorWrapper} />
             </React.Fragment>
         </BrowserRouter>, 
         document.getElementById('root')
