@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './index.css';
 import AuthorQuiz from './authorQuiz.js';
 import * as serviceWorker from './serviceWorker';
@@ -46,6 +47,28 @@ const authors = [
     }
 ];
 
+const state = {
+    turnData: getTurnData(authors),
+    highlight: 'none'
+};
+
+// Top level Component for the game; Route ="/"
+function App() {
+    return (
+        <AuthorQuiz {...state} onAnswerSelected={onAnswerSelected} />
+    );
+}
+
+// Top Level Component for the form to add new authors; Route = "/add"
+function AddAuthorForm({match}) {
+    return(
+        <div>
+            <h1>Add Author</h1>
+            <p>{JSON.stringify(match)}</p>
+        </div>
+    );
+}
+
 function getTurnData(authors) {
     const allBooks = authors.reduce(function (p, c, i) {
         return p.concat(c.books);
@@ -67,13 +90,17 @@ function onAnswerSelected(answer) {
     render();
 }
 
-const state = {
-    turnData: getTurnData(authors),
-    highlight: 'none'
-};
-
+// Render function, weird way of doing it but, this is how the tutorial/lesson did it.
 function render() {
-    ReactDOM.render(<AuthorQuiz {...state} onAnswerSelected={onAnswerSelected} />, document.getElementById('root'));
+    ReactDOM.render(
+        <BrowserRouter>
+            <React.Fragment>
+                <Route exact path="/" component={App} />
+                <Route path="/add" component={AddAuthorForm} />
+            </React.Fragment>
+        </BrowserRouter>, 
+        document.getElementById('root')
+    );
 }
 render();
 
