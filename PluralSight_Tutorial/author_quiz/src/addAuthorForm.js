@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './addAuthorForm.css';
 
 function AddAuthorForm({match, onAddAuthor}) {
@@ -85,4 +87,15 @@ class AuthorForm extends React.Component {
     }
 }
 
-export default AddAuthorForm;
+function mapDispatchToProps(dispatch, props) {
+    return {
+        onAddAuthor: (author) => {
+            dispatch({ type: 'ADD_AUTHOR', author });
+            props.history.push('/');
+        }
+    };
+}
+
+// Using Redux for action handling
+// State is held inside the component so the store isn't used: () => {}
+export default withRouter(connect(() =>{}, mapDispatchToProps)(AddAuthorForm));

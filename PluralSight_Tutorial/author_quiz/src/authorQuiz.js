@@ -1,19 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './authorQuiz.css';
 import './bootstrap.min.css'
 
-function AuthorQuiz ({turnData, highlight, onAnswerSelected, onContinue}) {
+
+// Required function definition for Redux
+function mapStateToProps(state) {
+  return {
+    turnData: state.turnData,
+    highlight: state.highlight
+  };
+}
+
+// Required function definition for Redux
+// Events -> actions for the redux store
+function mapDispatchToProps(dispatch) {
+  return {
+    onAnswerSelected: (answer) => {
+      dispatch({ type: 'ANSWER_SELECTED', answer });
+    },
+    onContinue: () => {
+      dispatch({ type: 'CONTINUE' });
+    }
+  };
+}
+
+// Now uses Redux to handle state...
+const AuthorQuiz = connect(mapStateToProps, mapDispatchToProps)(
+  function ({turnData, highlight, onAnswerSelected, onContinue}) {
     return (
       <div className="container-fluid">
         <Hero />
-        <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected}/>
-        <Continue show={highlight === 'correct'} onContinue={onContinue} />
-        <p><Link to="/add">Add An Author</Link></p>
+        <Turn {...turnData} highlight={highlight} onAnswerSelected={onAnswerSelected} />
+        <Continue show={highlight === 'correct'} onContinue={onContinue}/>
+        <p><Link to="/add">Add an author</Link></p>
         <Footer />
       </div>
     );
-}
+  });
 
 function Hero() {
   return (
