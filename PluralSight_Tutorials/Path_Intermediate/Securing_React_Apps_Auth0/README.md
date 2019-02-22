@@ -7,11 +7,13 @@
 * OAuth: Access Token -> Permissions/Scopes
 * JWTs can't be revoked; good idea to set short lifespan like 10 hours
 <br />
+
 ## Implicit Flow ##
 1. Your app directs the browser to the Auth0 sign-in
 1. Auth0 redirects to your app, at the callback URL you chose
 1. Your app reads the tokens from the URL  
 <br />
+
 ## Layers using OAuth and OIDC ##
 1. (top) OpenID Connect
     * Adds: 
@@ -22,6 +24,7 @@
 2. (mid) OAuth 2.0
 3. (btm) HTTP
 <br />
+
 ## JWT Parts ##
 1. Header
     * Type
