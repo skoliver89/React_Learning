@@ -8,6 +8,7 @@ export default class Auth {
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       redirectUri: process.env.REACT_APP_AUTH0_CALLBACK_URL,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
       responseType: "token id_token",
       scope: "openid profile email"
     });
@@ -24,39 +25,34 @@ export default class Auth {
         this.history.push("/");
       } else if (err) {
         this.history.push("/");
-        alert(`Error: ${err.error}. check the console for further details.`);
+        alert(`Error: ${err.error}. Check the console for further details.`);
         console.log(err);
       }
     });
   };
 
   setSession = authResult => {
-    // set the time that the access token will expire.
+    console.log(authResult);
+    // set the time that the access token will expire
     const expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
 
-    //It is not recommended to store Tokens in Local Storage
-    //The final module will move Token storage to memory
     localStorage.setItem("access_token", authResult.accessToken);
     localStorage.setItem("id_token", authResult.idToken);
     localStorage.setItem("expires_at", expiresAt);
   };
 
   isAuthenticated() {
-    const expires_at = JSON.parse(localStorage.getItem("expires_at"));
-    return new Date().getTime() < expires_at;
+    const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+    return new Date().getTime() < expiresAt;
   }
 
   logout = () => {
-    //It is not recommended to store Tokens in Local Storage
-    //The final module will move Token storage to memory
-    //Soft-logout
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
     this.userProfile = null;
-    //this.history.push("/");
     this.auth0.logout({
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       returnTo: "http://localhost:3000"
@@ -64,8 +60,6 @@ export default class Auth {
   };
 
   getAccessToken = () => {
-    //It is not recommended to store Tokens in Local Storage
-    //The final module will move Token storage to memory
     const accessToken = localStorage.getItem("access_token");
     if (!accessToken) {
       throw new Error("No access token found.");
