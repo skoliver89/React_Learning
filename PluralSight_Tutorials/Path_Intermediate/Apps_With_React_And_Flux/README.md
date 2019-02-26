@@ -2,7 +2,7 @@
 
 ## General Notes
 
-- WARNING: This Demo is a little out of date as of this README
+- WARNING: This Demo is out of date as of this README and should only be used as a reference to fundamentals
 - Testing React apps could be done with Jest, but will not be utilized in this Demo.
 - This Demo uses ES5; however, consider using ES6 in current projects and transpiling it via Babel
   - ES5 is being used in this demo for simplicity.
