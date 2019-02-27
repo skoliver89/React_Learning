@@ -12,4 +12,4 @@ Repo to store tutorial/lesson projects as I learn ReactJS
 1. Run: ```npm install```
 1. Run: ```npm start```
 
-#### NOTE: To start the 'Apps_With_React_And_Flux' Run: ```npx gulp```
+#### NOTE: To start the 'Apps_With_React_And_Flux' Example Run: ```npx gulp```
