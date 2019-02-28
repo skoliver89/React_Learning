@@ -30,7 +30,7 @@
 ### Notes:
 
 - This Demo will use the following redux starter:
-  - [Cory House Redux Starter](github.com/coryhouse/pluralsight-redux-starter)
+  - [Cory House Redux Starter](https://github.com/coryhouse/pluralsight-redux-starter)
 - Will use Babel-polyfill (large)
   - Consider pulling in only the polyfills you need instead
 - Using babel-preset-react-hmre for hot reloading
