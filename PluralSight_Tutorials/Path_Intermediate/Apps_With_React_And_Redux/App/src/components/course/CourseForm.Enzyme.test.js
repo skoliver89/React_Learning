@@ -8,6 +8,7 @@ function setup(saving) {
     course: {},
     saving: saving,
     errors: {},
+    allAuthors: [],
     onSave: () => {},
     onChange: () => {}
   };

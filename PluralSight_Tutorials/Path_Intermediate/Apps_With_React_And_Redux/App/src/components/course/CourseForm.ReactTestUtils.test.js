@@ -6,12 +6,13 @@ import CourseForm from "./CourseForm";
 // DEMO: Testing with React Test Utils.
 
 function setup(saving) {
-  let props = {
+  const props = {
     course: {},
     saving: saving,
     errors: {},
+    allAuthors: [],
     onSave: () => {},
-    OnChange: () => {}
+    onChange: () => {}
   };
   let renderer = TestUtils.createRenderer();
   renderer.render(<CourseForm {...props} />);
