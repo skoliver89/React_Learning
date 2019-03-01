@@ -11,7 +11,7 @@
 - ESLINT for linting
 - Mocha, React Test Utils, and Enzyme for testing
 - You can run `npm start -s` instead of `npm start` for less console noise (dev)
-- You can build the project with command => `npm build -s` or `npm build` (prod)
+- You can build the project with command => `npm run build -s` or `npm run build` (prod)
 - WARNING: The source code for this demo is a bit out of date.
 
 ## Why Redux?
