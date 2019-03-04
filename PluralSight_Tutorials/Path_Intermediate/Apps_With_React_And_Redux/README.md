@@ -49,7 +49,7 @@
 - Webpack: 1.13
 - Babel: 6.\*
 
-### Webstorm Extensions:
+### Atom Extensions:
 
 - react
 - terminal-plus
