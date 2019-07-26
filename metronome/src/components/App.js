@@ -1,7 +1,18 @@
-import React from 'react';
+import React from "react";
+import woodenBlockSound from "../sounds/wooden_block.wav";
 
 function App() {
-  return (<><button>Click Me</button></>);
+  const handleClick = () => {
+    const audio = new Audio(woodenBlockSound);
+    audio.volume = 0.2;
+    audio.play();
+  };
+
+  return (
+    <>
+      <button onClick={handleClick}>Click Me</button>{" "}
+    </>
+  );
 }
 
 export default App;
