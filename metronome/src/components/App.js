@@ -1,7 +1,7 @@
 import React from 'react';
 
 function App() {
-  return (<><h1>Placeholder</h1></>);
+  return (<><button>Click Me</button></>);
 }
 
 export default App;
