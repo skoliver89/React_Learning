@@ -1,0 +1,30 @@
+.volumeSlider {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 50px 20px 20px;
+}
+
+.sliderVertical {
+  writing-mode: bt-lr; /* IE */
+  -webkit-appearance: slider-vertical; /* WebKit */
+  height: 200px;
+  width: 20px;
+}
+
+.maxVolume {
+  margin-bottom: 5px;
+}
+
+.minVolume {
+  margin-top: 5px;
+}
+
+.maxVolume:hover,
+.minVolume:hover {
+  cursor: pointer;
+}
+
+.maxVolume:active,
+.minVolume:active {
+  color: rgba(0, 0, 0, 0.58);
+}
