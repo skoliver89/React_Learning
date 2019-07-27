@@ -4,37 +4,39 @@ import Metronome from "./Metronome";
 import woodenBlockSound from "../sounds/wooden_block.wav";
 
 let tick;
+let playVolume;
 
 function App() {
   const [volume, setVolume] = useState(25);
   const [isPlaying, setIsPlaying] = useState(false);
+  const bpm = 120;
 
   useEffect(() => {
     if (isPlaying) {
       playSound();
-      tick = setInterval(() => {
-        playSound();
-      }, 500);
-    } else clearInterval(tick);
+      tick = setInterval(() => playSound(), (60 / bpm) * 1000);
+    } else {
+      clearInterval(tick);
+    }
   }, [isPlaying]);
+
+  useEffect(() => {
+    playVolume = volume;
+  }, [volume]);
 
   const playSound = () => {
     const audio = new Audio(woodenBlockSound);
-    audio.volume = volume / 100;
-    audio
-      .play()
-      .then(() => {
-        audio.remove();
-      })
-      .catch(e => console.error(e));
+    audio.volume = playVolume / 100;
+    audio.play().catch(e => console.log(e));
+    if (audio.ended) audio.remove();
   };
 
   const toggleTick = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const changeVolume = e => {
-    const value = parseInt(e.target.value);
+  const changeVolume = event => {
+    const value = parseInt(event.target.value);
     setVolume(value);
   };
 

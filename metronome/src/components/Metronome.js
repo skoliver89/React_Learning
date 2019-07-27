@@ -6,11 +6,7 @@ export default function({ onClick, isPlaying }) {
   return (
     <>
       <button onClick={onClick}>
-        {!isPlaying ? (
-          <FontAwesomeIcon icon={faPlay} />
-        ) : (
-          <FontAwesomeIcon icon={faStop} />
-        )}
+        <FontAwesomeIcon icon={isPlaying ? faStop : faPlay} />
       </button>
     </>
   );
