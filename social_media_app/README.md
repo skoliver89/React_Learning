@@ -12,7 +12,9 @@ TLDR: Learn a thing!
 
 Source Video => [Full Stack React & Firebase Tutorial-Build a social media app](https://www.youtube.com/watch?v=m_u6P5k0vP0&t=1s)
 
-Author => [freeCodeCamp.org](https://www.freecodecamp.org/)
+Composition Video Author => [freeCodeCamp.org](https://www.freecodecamp.org/)
+
+Course Author => [Classed](https://www.youtube.com/classsed)
 
 ## Technology Stack
 
