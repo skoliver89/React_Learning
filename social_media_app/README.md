@@ -1,3 +1,13 @@
+# Social Media App Using React and Firebase
+
+## Purpose
+
+Learn how to tie React and Firebase together for a full stack, cloud-driven solution.
+
+I will be using the knowledge gained here for other personal projects.
+
+TLDR: Learn a thing!
+
 ## Credit Where Credit Is Due
 
 Source Video => [Full Stack React & Firebase Tutorial-Build a social media app](https://www.youtube.com/watch?v=m_u6P5k0vP0&t=1s)
