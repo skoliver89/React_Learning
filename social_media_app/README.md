@@ -1,5 +1,8 @@
 # Social Media App Using React and Firebase
 
+## Place left off at
+26:40 / 12:05:30
+
 ## Purpose
 
 Learn how to tie React and Firebase together for a full stack, cloud-driven solution.
@@ -37,3 +40,8 @@ Course Author => [Classed](https://www.youtube.com/classsed)
    - Video recommends VSCode
 1. React Dev Tools
 1. Redux Dev Tools
+
+## Commands To Get Set Up
+
+1. npm install -g firebase-tools
+2. firebase serve (serve locally) <- having some creds issues with this atm
