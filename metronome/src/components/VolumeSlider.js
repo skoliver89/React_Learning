@@ -6,16 +6,19 @@ import styles from "../styles/Volume.module.css";
 export default function({ value, changeVolume }) {
   return (
     <div className={styles.volumeSlider}>
-      <FontAwesomeIcon icon={faVolumeUp} className={styles.maxVolume} />
+      <FontAwesomeIcon icon={faVolumeUp} className={styles.volumeUp} />
       <br />
       <input
+        id="slider"
         type="range"
         value={value}
         onChange={changeVolume}
-        className={styles.sliderVertical}
+        className={styles.slider}
       />
       <br />
-      <FontAwesomeIcon icon={faVolumeOff} className={styles.minVolume} />
+      <div id="volumeDown" onClick={changeVolume}>
+        <FontAwesomeIcon className={styles.volumeDown} icon={faVolumeOff} />
+      </div>
     </div>
   );
 }

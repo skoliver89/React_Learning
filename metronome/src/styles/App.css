@@ -1,0 +1,14 @@
+/* Global Styles */
+
+.container {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px;
+  width: 600px !important;
+  height: 325px !important;
+  border: solid black 2px;
+  border-radius: 5px;
+}
