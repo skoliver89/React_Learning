@@ -14,6 +14,8 @@ export default function({ value, changeVolume }) {
         value={value}
         onChange={changeVolume}
         className={styles.slider}
+        orient="vertical"
+        aria-orientation="vertical"
       />
       <br />
       <div id="volumeDown" onClick={changeVolume}>

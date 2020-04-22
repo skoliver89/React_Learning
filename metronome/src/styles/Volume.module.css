@@ -6,8 +6,9 @@
 .slider {
   writing-mode: bt-lr; /* IE */
   -webkit-appearance: slider-vertical; /* WebKit */
-  height: 200px;
-  width: 20px;
+  width: 8px;
+  height: 175px;
+  padding: 0;
 }
 
 .volumeUp {
