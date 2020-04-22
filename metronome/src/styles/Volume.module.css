@@ -1,13 +1,12 @@
 .volumeSlider {
-  text-align: center;
-  float: left;
+  height: 90%;
 }
 
 .slider {
   writing-mode: bt-lr; /* IE */
   -webkit-appearance: slider-vertical; /* WebKit */
   width: 8px;
-  height: 175px;
+  height: 100%;
   padding: 0;
 }
 

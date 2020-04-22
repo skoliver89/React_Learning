@@ -64,18 +64,18 @@ function App() {
   };
 
   return (
-    <Container>
+    <Container fuild>
       <Row>
-        <Col sm={2}>
+        <Col xs={1} sm={1} md={1} lg={1} xl={1}>
           <VolumeSlider value={volume} changeVolume={changeVolume} />
         </Col>
-        <Col sm={10}>
-          <Metronome onClick={toggleTick} isPlaying={isPlaying} />
+        <Col xs={10} sm={10} md={10} lg={10} xl={10}>
+          <Metronome onClick={toggleTick} isPlaying={isPlaying} bpm={bpm} />
         </Col>
       </Row>
       <Row>
         <Col>
-          <BpmInput value={bpm} changeBpm={changeBpm} />
+          <BpmInput value={bpm} changeBpm={changeBpm} isPlaying={isPlaying} />
         </Col>
       </Row>
     </Container>
